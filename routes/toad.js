@@ -22,3 +22,5 @@ router.patch("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   res.json({ greeting: "Hello from delet a toad route" });
 });
+
+module.exports = router;
