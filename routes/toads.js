@@ -1,10 +1,12 @@
 const express = require("express");
-
 const router = express.Router();
+const Toad = require("../models/toadModel");
 
 //GET all toads
 router.get("/", (req, res) => {
-  res.json({ greeting: "Hello from get all toads route" });
+  Toad.find()
+    .then((data) => res.json({ data }))
+    .catch((err) => res.status(400).json(err.message));
 });
 
 router.get("/:id", (req, res) => {
@@ -12,7 +14,12 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  res.json({ greeting: "Hello from POST a toad route" });
+  let toad = new Toad({ name: req.body.name });
+  console.log(toad);
+  toad
+    .save()
+    .then((data) => res.status(200).json({ data: data }))
+    .catch((err) => res.status(400).json({ error: err.message }));
 });
 
 router.patch("/:id", (req, res) => {

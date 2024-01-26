@@ -1,11 +1,15 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const toadRoutes = require("./routes/toads.js");
+const bodyParser = require("body-parser");
+
 const app = express();
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
