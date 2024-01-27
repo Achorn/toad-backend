@@ -11,9 +11,8 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   Toad.findById(req.params.id)
-    .then((data) => json(data))
-    .catch((err) => {});
-  res.json({ greeting: "Hello from get one toad route" });
+    .then((data) => res.json(data))
+    .catch((err) => res.json({ error: err.message }));
 });
 
 router.post("/", (req, res) => {
