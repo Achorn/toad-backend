@@ -17,7 +17,6 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   let toad = new Toad({ name: req.body.name });
-  console.log(toad);
   toad
     .save()
     .then((data) => res.status(200).json(data))
