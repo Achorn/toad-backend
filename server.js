@@ -17,12 +17,19 @@ app.use((req, res, next) => {
 
 app.use("/api/toads", toadRoutes);
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
+
 //connect to db
-mongoose.connect(process.env.MONGO_URI).then(() => {
+connectDB().then(() => {
   const listener = app.listen(process.env.PORT || 4000, () => {
-    console.log(
-      "Your app connected to db & is listening on port " +
-        listener.address().port
-    );
+    console.log("Your app is listening on port " + listener.address().port);
   });
 });
