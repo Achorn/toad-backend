@@ -1,34 +1,22 @@
 const express = require("express");
+const {
+  getToads,
+  getToad,
+  createToad,
+  deleteToad,
+  updateToad,
+} = require("../controllers/toadController");
+
 const router = express.Router();
-const Toad = require("../models/toadModel");
 
-//GET all toads
-router.get("/", (req, res) => {
-  Toad.find()
-    .then((data) => res.json(data))
-    .catch((err) => res.status(400).json(err.message));
-});
+router.post("/", createToad);
 
-router.get("/:id", (req, res) => {
-  Toad.findById(req.params.id)
-    .then((data) => res.json(data))
-    .catch((err) => res.json({ error: err.message }));
-});
+router.get("/", getToads);
 
-router.post("/", (req, res) => {
-  let toad = new Toad({ name: req.body.name });
-  toad
-    .save()
-    .then((data) => res.status(200).json(data))
-    .catch((err) => res.status(400).json({ error: err.message }));
-});
+router.get("/:id", getToad);
 
-router.patch("/:id", (req, res) => {
-  res.json({ greeting: "Hello from update toad route" });
-});
+router.patch("/:id", updateToad);
 
-router.delete("/:id", (req, res) => {
-  res.json({ greeting: "Hello from delet a toad route" });
-});
+router.delete("/:id", deleteToad);
 
 module.exports = router;
