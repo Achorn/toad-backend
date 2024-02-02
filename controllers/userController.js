@@ -12,12 +12,21 @@ const signupUser = async (req, res) => {
       const token = createToken(data._id);
       res.json({ email, token });
     })
-    .catch((err) => res.json({ error: err.message }));
+    .catch((err) => {
+      res.json({ error: err.message });
+    });
 };
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  res.json({ msg: "hello from login" });
+  User.login(email, password)
+    .then((data) => {
+      const token = createToken(data._id);
+      res.json({ email, token });
+    })
+    .catch((err) => {
+      res.json({ error: err.message });
+    });
 };
 
 module.exports = { signupUser, loginUser };
