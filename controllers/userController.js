@@ -13,7 +13,7 @@ const signupUser = async (req, res) => {
       res.json({ email, token });
     })
     .catch((err) => {
-      res.json({ error: err.message });
+      res.status(400).json({ error: err.message });
     });
 };
 
@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
       res.json({ email, token });
     })
     .catch((err) => {
-      res.json({ error: err.message });
+      res.status(400).json({ error: err.message });
     });
 };
 
