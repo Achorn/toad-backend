@@ -10,13 +10,14 @@ const createToad = async (req, res) => {
     .catch((err) => res.status(400).json({ error: err.message }));
 };
 
-const getToads = async (req, res) => {
-  Toad.find()
+const getToad = async (req, res) => {
+  user_id = req.user._id;
+  Toad.findOne({ user_id })
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json(err.message));
 };
 
-const getToad = async (req, res) => {
+const getToadById = async (req, res) => {
   Toad.findById(req.params.id)
     .then((data) => res.json(data))
     .catch((err) => res.json({ error: err.message }));
@@ -26,7 +27,7 @@ const updateToad = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such workout" });
+    return res.status(404).json({ error: "No such Toad" });
   }
 
   Toad.findOneAndUpdate({ _id: id }, { ...req.body })
@@ -55,8 +56,8 @@ const deleteToad = async (req, res) => {
 };
 
 module.exports = {
-  getToads,
-  getToad,
+  getToads: getToad,
+  getToad: getToadById,
   createToad,
   deleteToad,
   updateToad,
