@@ -9,13 +9,13 @@ const requireAuth = async (req, res, next) => {
   }
 
   const token = authorization.split(" ")[1];
-  console.log("got token");
   // get user id from token
   try {
     const { _id } = jwt.verify(token, process.env.SECRET);
     console.log("got id: ", _id);
 
-    req.user = await User.find({ _id }).select("_id");
+    req.user = await User.findOne({ _id }).select("_id");
+    console.log("got User:", req.user);
     next();
   } catch (error) {
     console.log(error);

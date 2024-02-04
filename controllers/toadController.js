@@ -2,7 +2,8 @@ const Toad = require("../models/toadModel");
 const mongoose = require("mongoose");
 
 const createToad = async (req, res) => {
-  let toad = new Toad({ name: req.body.name });
+  const user_id = req.user.id;
+  let toad = new Toad({ name: req.body.name, user_id });
   toad
     .save()
     .then((data) => res.status(200).json(data))
