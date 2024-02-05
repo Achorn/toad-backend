@@ -26,6 +26,8 @@ const getToadById = async (req, res) => {
 const updateToad = async (req, res) => {
   const { id } = req.params;
 
+  // TODO: cancel if toads user_id doesnt match up with user making request
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such Toad" });
   }
@@ -33,14 +35,16 @@ const updateToad = async (req, res) => {
   Toad.findOneAndUpdate({ _id: id }, { ...req.body })
     .then((toad) => {
       if (!toad) res.status(400).json({ error: "No such toad" });
-      //returns pre updated toad
       res.json(toad);
     })
-    .catch((err) => res.json({ error: err.message }));
+    .catch((err) => {
+      res.status(400).json({ error: err.message });
+    });
 };
 
 const deleteToad = async (req, res) => {
   const { id } = req.params;
+  // TODO: cancel if toads user_id doesnt match up with user making request
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such toad" });
