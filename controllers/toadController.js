@@ -27,7 +27,8 @@ const updateToad = async (req, res, next) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw createError(404, "No such Toad");
+    const err = createError(404, "No such Toad");
+    next(err);
   }
   Toad.findOneAndUpdate({ _id: id }, { ...req.body })
     .then((toad) => {
@@ -43,7 +44,7 @@ const deleteToad = async (req, res, next) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw createError(404, "No such toad");
+    next(createError(404, "No such toad"));
   }
   Toad.findOneAndDelete({ _id: id })
     .then((toad) => {
